@@ -4,7 +4,6 @@ import { createStore } from 'vuex';
 
 const app = createApp(App);
 
-// Defina a store usando a API correta para Vuex com Vue 3
 const store = createStore({
   state: {
     capivaras: []
@@ -16,16 +15,12 @@ const store = createStore({
   }
 });
 
-// Adicione a store ao app
 app.use(store);
 
-// Se a propriedade productionTip ainda existir no Vue 3
-// app.config.productionTip = false;
-
-// Monte o app
+// Moounting the app
 app.mount('#app');
 
-// Fetch de dados pode ser feito no ciclo de vida ou no componente diretamente
+// Fetching the data when mounted
 app.mounted(() => {
   fetch('http://localhost:3000/api/capivaras')
     .then(response => response.json())
