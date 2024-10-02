@@ -1,31 +1,38 @@
 <template>
   <div id="app">
-    <h1>Capivaras</h1>
-    <CapivaraList />
+    <h1>Capivara Manager</h1>
+    <CapivaraForm @add-capivara="fetchCapivaras" />
+    <CapivaraList :capivaras="capivaras" />
   </div>
 </template>
 
 <script>
-import CapivaraList from './components/CapivaraList.vue'
+import CapivaraList from './components/CapivaraList.vue';
+import CapivaraForm from './components/CapivaraForm.vue';
 
 export default {
   name: 'App',
   components: {
-    CapivaraList
-  }
-}
+    CapivaraList,
+    CapivaraForm,
+  },
+  data() {
+    return {
+      capivaras: [],
+    };
+  },
+  mounted() {
+    this.fetchCapivaras();
+  },
+  methods: {
+    fetchCapivaras() {
+      fetch('http://localhost:3000/api/capivaras')
+        .then((response) => response.json())
+        .then((data) => {
+          this.capivaras = data;
+        })
+        .catch((error) => console.error('Erro ao carregar capivaras:', error));
+    },
+  },
+};
 </script>
-<style>
-@import url('https://fonts.googleapis.com/css?family=Roboto');
-body {
-  font-family: 'Roboto', sans-serif;
-  margin: 0;
-  padding: 20px;
-  background-color: #f0f0f0;
-}
-
-h1 {
-  color: #333;
-  text-align: center;
-}
-</style>
